@@ -34,6 +34,7 @@ term_handler() {
 trap 'kill ${!}; term_handler' SIGTERM
 su ${USER} -c "/opt/scripts/start-server.sh" &
 killpid="$!"
+su ${USER} -c "/opt/scripts/start-restart-monitor.sh" $killpid &
 while true
 do
   wait $killpid
