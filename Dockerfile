@@ -4,8 +4,19 @@ LABEL org.opencontainers.image.authors="admin@minenet.at"
 LABEL org.opencontainers.image.source="https://github.com/ich777/docker-steamcmd-server"
 
 RUN apt-get update && \
-	apt-get -y install --no-install-recommends lib32gcc-s1 lib32stdc++6 xdg-user-dirs && \
+	apt-get -y install --no-install-recommends \
+	lib32gcc-s1 lib32stdc++6 xdg-user-dirs \
+	build-essential cmake check libbsd-dev \
+	libglib2.0-dev bc git && \
 	rm -rf /var/lib/apt/lists/*
+
+RUN git clone https://github.com/n0la/rcon.git && \
+	cd rcon && \
+	mkdir build && \
+	cd build && \
+	cmake .. -DCMAKE_INSTALL_PREFIX=/usr && \
+	make && \
+	make install
 
 ENV DATA_DIR="/serverdata"
 ENV STEAMCMD_DIR="${DATA_DIR}/steamcmd"
@@ -23,7 +34,7 @@ ENV UID=99
 ENV GID=100
 ENV USERNAME=""
 ENV PASSWRD=""
-ENV ADMIN_PASSWRD=""
+ENV ADMIN_PASSWORD="adminDocker"
 ENV USER="steam"
 ENV DATA_PERM=770
 ENV MEMORY_THRESHOLD=80

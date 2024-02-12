@@ -34,17 +34,21 @@ You can also run multiple servers with only one SteamCMD directory!
 
 ## Run example
 ```
-docker run --name Palworld `
-    -p 8211:8211/udp -p 25575:25575 `
-    -e "GAME_ID=2394010" `
-    -e "UPDATE_PUBLIC_IP=false" `
-    -e "GAME_PARAMS=EpicApp=PalServer" `
-    -e "GAME_PARAMS_EXTRA=-No-useperfthreads -NoAsyncLoadingThread -UseMultithreadForDS" `
-    -e "BACKUP=true" `
-    -e "BACKUP_INTERVAL=120" `
-    -e "BACKUPS_TO_KEEP=12" `
-    -e "UID=99" `
-    -e "GID=100" `
+docker run --name Palworld \
+    -p 8211:8211/udp -p 25575:25575 \
+    -e "GAME_ID=2394010" \
+    -e "UPDATE_PUBLIC_IP=false" \
+    -e "GAME_PARAMS=EpicApp=PalServer" \
+    -e "GAME_PARAMS_EXTRA=-No-useperfthreads -NoAsyncLoadingThread -UseMultithreadForDS" \
+    -e "BACKUP=true" \
+    -e "BACKUP_INTERVAL=120" \
+    -e "BACKUPS_TO_KEEP=12" \
+    -e "UID=99" \
+    -e "GID=100" \
+    -e "MEMORY_THRESHOLD=15" \
+    -e "KILL_TIMER=30" \
+    --volume /path/to/steamcmd:/serverdata/steamcmd \
+	--volume /path/to/palworld:/serverdata/serverfiles \
     palworld
 ```
 
