@@ -111,10 +111,13 @@ if [ "${BACKUP}" == "true" ]; then
 fi
 
 echo "---Start Server---"
-if [ ! -f ${SERVER_DIR}/Pal/Binaries/Linux/PalServer-Linux-Test ]; then
-  echo "---Something went wrong, can't find the executable, putting container into sleep mode!---"
-  sleep infinity
-else
+if [ -f ${SERVER_DIR}/Pal/Binaries/Linux/PalServer-Linux-Shipping ]; then
+  cd ${SERVER_DIR}
+  ${SERVER_DIR}/Pal/Binaries/Linux/PalServer-Linux-Shipping Pal -nocore ${GAME_PARAMS} ${GAME_PARAMS_EXTRA}
+elif [ -f ${SERVER_DIR}/Pal/Binaries/Linux/PalServer-Linux-Test ]; then
   cd ${SERVER_DIR}
   ${SERVER_DIR}/Pal/Binaries/Linux/PalServer-Linux-Test Pal -nocore ${GAME_PARAMS} ${GAME_PARAMS_EXTRA}
+else
+  echo "---Something went wrong, can't find the executable, putting container into sleep mode!---"
+  sleep infinity
 fi
